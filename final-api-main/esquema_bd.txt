@@ -1,0 +1,176 @@
+CREATE TABLE `administrador` (
+  `admin_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `contrasena` varchar(100) NOT NULL,
+  PRIMARY KEY (`admin_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `almacen` (
+  `producto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_a` varchar(100) NOT NULL,
+  `unidades` float NOT NULL,
+  `tipo` varchar(50) NOT NULL,
+  `responsable` varchar(100) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`producto_id`),
+  KEY `almacen_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `asistencias` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `nombre_t` varchar(100) NOT NULL,
+  `apellido_p` varchar(100) NOT NULL,
+  `fecha` date NOT NULL,
+  `entrada` varchar(20) NOT NULL,
+  `salida` varchar(20) NOT NULL,
+  `retardo` varchar(20) NOT NULL,
+  `descuento` varchar(20) NOT NULL,
+  `mes` varchar(20) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `asistencia_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `cliente` (
+  `cliente_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(100) NOT NULL,
+  `numero` bigint(20) NOT NULL,
+  `contrasena` varchar(100) NOT NULL,
+  PRIMARY KEY (`cliente_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `gastos` (
+  `gasto_id` int(11) NOT NULL AUTO_INCREMENT,
+  `producto_id` int(11) NOT NULL,
+  `nombre_a` varchar(100) NOT NULL,
+  `unidades` int(11) NOT NULL,
+  `costo` float NOT NULL,
+  `fecha` varchar(20) NOT NULL,
+  `tipo` varchar(50) NOT NULL,
+  `responsable` varchar(100) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`gasto_id`),
+  KEY `gasto_producto_id` (`producto_id`),
+  KEY `gasto_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `horario` (
+  `user_id` int(11) NOT NULL,
+  `nombre_t` varchar(100) NOT NULL,
+  `lunes` varchar(20) NOT NULL,
+  `martes` varchar(20) NOT NULL,
+  `miercoles` varchar(20) NOT NULL,
+  `jueves` varchar(20) NOT NULL,
+  `viernes` varchar(20) NOT NULL,
+  `sabado` varchar(20) NOT NULL,
+  `domingo` varchar(20) NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `menu` (
+  `producto_id` int(11) NOT NULL,
+  `nombre_m` varchar(100) NOT NULL,
+  `precio` varchar(20) NOT NULL,
+  `descripcion` text NOT NULL,
+  `tortilla_maiz` int(11) NOT NULL,
+  `tortilla_harina` int(11) NOT NULL,
+  `cemita` int(11) NOT NULL,
+  `aguacate` int(11) NOT NULL,
+  `carne_res` int(11) NOT NULL,
+  `carne_puerco` int(11) NOT NULL,
+  `longaniza` int(11) NOT NULL,
+  `cecina` int(11) NOT NULL,
+  `chorizo_argentino` int(11) NOT NULL,
+  `chicharron` int(11) NOT NULL,
+  `salsa_quemada` int(11) NOT NULL,
+  `chimichurri` int(11) NOT NULL,
+  `cacahuate` int(11) NOT NULL,
+  `papas` int(11) NOT NULL,
+  `mayonesa` int(11) NOT NULL,
+  `pico_gallo` int(11) NOT NULL,
+  `crema_acida` int(11) NOT NULL,
+  `rajas_crema` int(11) NOT NULL,
+  PRIMARY KEY (`producto_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `pagos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `nombre_t` varchar(100) NOT NULL,
+  `puesto` varchar(100) NOT NULL,
+  `pago` varchar(50) NOT NULL,
+  `mes` varchar(20) NOT NULL,
+  `pagado` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `pago_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `tareas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `nombre_t` varchar(100) NOT NULL,
+  `puesto` varchar(100) NOT NULL,
+  `tarea` text NOT NULL,
+  `realizado` tinyint(1) NOT NULL,
+  `turno` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tarea_user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `trabajador` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre_t` varchar(100) NOT NULL,
+  `apellido_p` varchar(100) NOT NULL,
+  `apellido_m` varchar(100) NOT NULL,
+  `puesto` varchar(100) NOT NULL,
+  `fecha_nacimiento` date NOT NULL,
+  `curp` tinyint(1) NOT NULL,
+  `acta_nacimiento` tinyint(1) NOT NULL,
+  `ine` tinyint(1) NOT NULL,
+  `constancia_sf` tinyint(1) NOT NULL,
+  `constancia_ht` tinyint(1) NOT NULL,
+  `fotos` tinyint(1) NOT NULL,
+  `uniforme` tinyint(1) NOT NULL,
+  `correo` tinyint(1) NOT NULL,
+  `numero` tinyint(1) NOT NULL,
+  `contrasena` varchar(100) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `trabajador_nombre_t` (`nombre_t`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `ventas` (
+  `venta_id` int(11) NOT NULL AUTO_INCREMENT,
+  `producto_id` int(11) NOT NULL,
+  `nombre_m` varchar(100) NOT NULL,
+  `precio` varchar(20) NOT NULL,
+  `cliente_id` int(11) NOT NULL,
+  PRIMARY KEY (`venta_id`),
+  KEY `venta_producto_id` (`producto_id`),
+  KEY `venta_cliente_id` (`cliente_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+ALTER TABLE `almacen`
+  ADD CONSTRAINT `almacen_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `trabajador` (`user_id`);
+
+ALTER TABLE `asistencias`
+  ADD CONSTRAINT `asistencias_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `trabajador` (`user_id`);
+
+ALTER TABLE `gastos`
+  ADD CONSTRAINT `gastos_ibfk_1` FOREIGN KEY (`producto_id`) REFERENCES `almacen` (`producto_id`),
+  ADD CONSTRAINT `gastos_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `trabajador` (`user_id`);
+
+ALTER TABLE `horario`
+  ADD CONSTRAINT `horario_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `trabajador` (`user_id`);
+
+ALTER TABLE `menu`
+  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`producto_id`) REFERENCES `almacen` (`producto_id`);
+
+ALTER TABLE `pagos`
+  ADD CONSTRAINT `pagos_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `trabajador` (`user_id`);
+
+ALTER TABLE `tareas`
+  ADD CONSTRAINT `tareas_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `trabajador` (`user_id`);
+
+ALTER TABLE `ventas`
+  ADD CONSTRAINT `ventas_ibfk_1` FOREIGN KEY (`producto_id`) REFERENCES `menu` (`producto_id`),
+  ADD CONSTRAINT `ventas_ibfk_2` FOREIGN KEY (`cliente_id`) REFERENCES `cliente` (`cliente_id`);
